@@ -1,0 +1,6 @@
+# .Net build folders
+API/bin
+API/obj
+
+# macOS folder settings
+.DS_Store
