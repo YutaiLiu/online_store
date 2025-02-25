@@ -1,0 +1,11 @@
+# .Net build folders
+bin
+obj
+
+# local DB file
+store.*
+
+# App settings
+appsettings.Development.json
+appsettings.Production.json
+appsettings.json
