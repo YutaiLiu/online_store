@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
+import { Product } from "../models/Product";
+import Catalog from "../../features/catalog/Catalog";
+import { Box, Button, Container, Typography } from "@mui/material";
 
 function App() {
   // React hook useState()
-  const [products, setProducts] = useState([
-    { Id: 1, name: 'Apple', price: 1 },
-    { Id: 2, name: 'Banana', price: 2 },
-    { Id: 3, name: 'Cherry', price: 3 }
-  ]);
+  // setProducts is a function that will update the state
+  // it can be called with a new value to update the state
+  // and it will map by the key of the object
+  // useState<Product[]>([]) initializes the state producs with an empty array
+  // and it tells TypeScript that the state will be an array of Product objects
+  const [products, setProducts] = useState<Product[]>([]);
 
   // second parameter of useEffect() is for dependencies
   // if you pass an empty array, it will only run once when the component is mounted
@@ -15,13 +19,13 @@ function App() {
   useEffect(() => {
     fetch('https://localhost:5001/api/products')
       .then(response => response.json())
-      .then(data => setProducts(data));
+      .then(data => setProducts(data));    
   }, []);
 
   // Arrow function
   // ... is called the spread operator
   const addProduct = () => {
-    setProducts([...products, { Id: products.length, name: 'product' + (products.length + 1), price: products.length + 1}]);
+    //setProducts([...products, { Id: products.length, name: 'product' + (products.length + 1), price: products.length + 1}]);
   }
 
   return (
@@ -33,15 +37,21 @@ function App() {
     // the first one, with parentheses, is called an implicit return
     // 3. onClick={addProduct} is a reference to the function addProduct
     // if you write onClick={addProduct()} it will call the function immediately when the component is rendered
-    <div>
-      <h1>Online Store</h1>
-      <ul>
-        {products.map((item, index) => (
-          <li key={index}>{item.name} + {item.price}</li>
-        ))}
-      </ul>
-      <button onClick={addProduct}>Add Product</button>
-    </div>
+    // 4. pass props down to the child component Catalog
+    <Container maxWidth="xl">
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '1rem', 
+          justifyContent: 'center'
+        }}
+      >
+        <Typography variant='h4'>Online Store</Typography>
+        <Button onClick={addProduct}>Add Product</Button>
+      </Box>
+      <Catalog products={products}/>
+    </Container>
   )
 }
 

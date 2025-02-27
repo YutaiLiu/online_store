@@ -31,9 +31,16 @@ What is SPA?
 Single page application, modern concept of web application, using reusable component instead of route between multiple web page, has higher performance.
 JSX or TSX
 Basically, JavaScript + HTML = JSX, TypeScript + HTML = TSX.
+TypeScript is a superset of JavaScript and also a strong type language, which can detect mistake, like typo, that JavaScript couldn't catch early.
 
 # Create React project with Vite
 Run ```npm create vite@latest```
 
 # Use useEffect React hook to retrieve data from local DB
 Prerequisit: Set up CORS policy properly in API project
+
+# Use material UI library to build UI
+run
+```npm install @mui/material @emotion/react @emotion/styled```
+```npm install @fontsource/roboto```
+```npm install @mui/icons-material```
