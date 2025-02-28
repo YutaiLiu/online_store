@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Product } from "../models/Product";
 import Catalog from "../../features/catalog/Catalog";
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import NavBar from "./NavBar";
 
 function App() {
   // React hook useState()
@@ -11,6 +12,12 @@ function App() {
   // useState<Product[]>([]) initializes the state producs with an empty array
   // and it tells TypeScript that the state will be an array of Product objects
   const [products, setProducts] = useState<Product[]>([]);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light',
+    }
+  });
 
   // second parameter of useEffect() is for dependencies
   // if you pass an empty array, it will only run once when the component is mounted
@@ -22,10 +29,8 @@ function App() {
       .then(data => setProducts(data));    
   }, []);
 
-  // Arrow function
-  // ... is called the spread operator
-  const addProduct = () => {
-    //setProducts([...products, { Id: products.length, name: 'product' + (products.length + 1), price: products.length + 1}]);
+  const themeSwitcher = () => {
+    setDarkMode(!darkMode);
   }
 
   return (
@@ -38,20 +43,22 @@ function App() {
     // 3. onClick={addProduct} is a reference to the function addProduct
     // if you write onClick={addProduct()} it will call the function immediately when the component is rendered
     // 4. pass props down to the child component Catalog
-    <Container maxWidth="xl">
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <NavBar themeSwitcher={themeSwitcher}/>
       <Box
         sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '1rem', 
-          justifyContent: 'center'
+          minHeight: '100vh',
+          background: darkMode
+            ? 'radial-gradient(circle, #1e3aBa, #111B27)'
+            : 'radial-gradient(circle, #baecf9, #f0f9ff)'
         }}
       >
-        <Typography variant='h4'>Online Store</Typography>
-        <Button onClick={addProduct}>Add Product</Button>
+        <Container maxWidth="xl" sx={{ padding: '2rem' }}>
+          <Catalog products={products}/>
+        </Container>
       </Box>
-      <Catalog products={products}/>
-    </Container>
+    </ThemeProvider>
   )
 }
 
