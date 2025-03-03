@@ -1,33 +1,15 @@
-import { useEffect, useState } from "react";
-import { Product } from "../models/Product";
-import Catalog from "../../features/catalog/Catalog";
+import { useState } from "react";
 import { Box, Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import NavBar from "./NavBar";
+import { Outlet } from "react-router";
 
 function App() {
-  // React hook useState()
-  // setProducts is a function that will update the state
-  // it can be called with a new value to update the state
-  // and it will map by the key of the object
-  // useState<Product[]>([]) initializes the state producs with an empty array
-  // and it tells TypeScript that the state will be an array of Product objects
-  const [products, setProducts] = useState<Product[]>([]);
   const [darkMode, setDarkMode] = useState<boolean>(false);
   const theme = createTheme({
     palette: {
       mode: darkMode ? 'dark' : 'light',
     }
   });
-
-  // second parameter of useEffect() is for dependencies
-  // if you pass an empty array, it will only run once when the component is mounted
-  // if you pass a variable, it will run every time that variable changes
-  // in this case of data fetching, you don't need to run it every time the component is rendered
-  useEffect(() => {
-    fetch('https://localhost:5001/api/products')
-      .then(response => response.json())
-      .then(data => setProducts(data));    
-  }, []);
 
   const themeSwitcher = () => {
     setDarkMode(!darkMode);
@@ -45,17 +27,18 @@ function App() {
     // 4. pass props down to the child component Catalog
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <NavBar themeSwitcher={themeSwitcher}/>
+      <NavBar darkMode={darkMode} themeSwitcher={themeSwitcher}/>
       <Box
         sx={{
           minHeight: '100vh',
+          
           background: darkMode
             ? 'radial-gradient(circle, #1e3aBa, #111B27)'
-            : 'radial-gradient(circle, #baecf9, #f0f9ff)'
+            : 'radial-gradient(circle, #baecf9, #f0f9ff)', 
         }}
       >
-        <Container maxWidth="xl" sx={{ padding: '2rem' }}>
-          <Catalog products={products}/>
+        <Container sx={{ minWidth: '100vw', padding: '2rem' }}>
+          <Outlet />
         </Container>
       </Box>
     </ThemeProvider>

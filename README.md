@@ -44,3 +44,6 @@ run
 ```npm install @mui/material @emotion/react @emotion/styled```
 ```npm install @fontsource/roboto```
 ```npm install @mui/icons-material```
+
+# Add React Router to SPA
+SPA also need routing, because instead of using file to replace file in multi-page web app, we use React component to replace React component in SPA.
