@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from "react-redux"
-import { CounterState, decrement, increment } from "./counterReducer"
+//import { CounterState, decrement, increment } from "./counterReducer"
 import { Button, ButtonGroup, Typography } from "@mui/material"
+import { decrement, increment } from "../../actionsLegacy/counterActions";
+import { RootState } from "../../reducersLegacy/rootReducer";
 
 export default function ContactPage() {
-    const data = useSelector((state: CounterState) => state.data)
+    const data = useSelector((state : RootState) => state.counter.value)
     const dispatch = useDispatch();
 
     return (

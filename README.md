@@ -57,7 +57,7 @@ Redux Flow:
 3. Reducer will execute the action, update app states by creating new app states and replacing the previous states in Redux Store, not by modify old state directly.
 4. React-Redux Provider will be notified, then the app and the component will also be notified
 5. Components that depend on the new state will be re-rendered to reflect the changes
-Redux Toolkit will simplify the Redux flow in development by simplify boilerplate codes and help developer introduce less bug to their project with Redux.
+Redux Toolkit will simplify the Redux flow in development by simplify boilerplate codes and help developer introduce less bug to their project with Redux. It became the only recommended way to write Redux login since 2023.
 RTK will provide a new way of data fetching, it handle data fetching, caching, loading, error handling very well.
 
 #  React hooks in React Redux, useSellector and useDispatcher
