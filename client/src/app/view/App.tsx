@@ -1,19 +1,16 @@
-import { useState } from "react";
 import { Box, Container, createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import NavBar from "./NavBar";
 import { Outlet } from "react-router";
+import { useAppSelector } from "../store/store";
 
 function App() {
-  const [darkMode, setDarkMode] = useState<boolean>(false);
+  const isDarkMode = useAppSelector(state => state.ui.isDarkMode);
+  console.log('isDarkMode:', isDarkMode);
   const theme = createTheme({
     palette: {
-      mode: darkMode ? 'dark' : 'light',
+      mode: isDarkMode ? 'dark' : 'light',
     }
   });
-
-  const themeSwitcher = () => {
-    setDarkMode(!darkMode);
-  }
 
   return (
     // Notes:
@@ -27,12 +24,12 @@ function App() {
     // 4. pass props down to the child component Catalog
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <NavBar darkMode={darkMode} themeSwitcher={themeSwitcher}/>
+      <NavBar />
       <Box
         sx={{
           minHeight: '100vh',
           
-          background: darkMode
+          background: isDarkMode
             ? 'radial-gradient(circle, #1e3aBa, #111B27)'
             : 'radial-gradient(circle, #baecf9, #f0f9ff)', 
         }}

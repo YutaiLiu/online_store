@@ -1,11 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { counterSlice } from "../../features/contact/counterReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { catalogApi } from "../../features/catalog/catalogApi";
+import { uiSlice } from "../view/uiSlice";
 
 export const store = configureStore({
     reducer: {
-        counter: counterSlice.reducer
-    }
+        // this is RTK Query reducer
+        catalogApi: catalogApi.reducer,
+        counter: counterSlice.reducer,
+        ui: uiSlice.reducer
+    },
+    // Add the API middleware to the store
+    // middleware will take care of the API requests and responses
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(catalogApi.middleware)
 })
 
 export type RootState = ReturnType<typeof store.getState>

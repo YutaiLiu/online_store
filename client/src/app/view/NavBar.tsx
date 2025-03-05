@@ -1,6 +1,8 @@
 import { DarkMode, LightMode, ShoppingCart } from "@mui/icons-material";
-import { AppBar, Badge, IconButton, List, ListItem, Toolbar, Typography } from "@mui/material";
+import { AppBar, Badge, Box, IconButton, LinearProgress, List, ListItem, Toolbar, Typography } from "@mui/material";
 import { NavLink } from "react-router";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { setDarkMode } from "../view/uiSlice";
 
 const midLinks = [
     { title: 'Home', path: '/' },
@@ -21,12 +23,11 @@ const NavStyle = {
     '&.active': { color: 'orange' }
 }
 
-type NavBarProps = {
-    darkMode: boolean;
-    themeSwitcher: () => void;
-}
+export default function NavBar() {
+    const dispatch = useAppDispatch();
+    const isLoading = useAppSelector(state => state.ui.isLoading);
+    const isDarkMode = useAppSelector(state => state.ui.isDarkMode);
 
-export default function NavBar(props: NavBarProps) {
     return (
         <AppBar position="static">
             <Toolbar sx={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -64,12 +65,17 @@ export default function NavBar(props: NavBarProps) {
                         </ListItem>
                     ))}
                     <ListItem>
-                        <IconButton onClick={props.themeSwitcher}>
-                            {props.darkMode ? <DarkMode /> : <LightMode sx={{ color: 'orange' }} />}
+                        <IconButton onClick={() => dispatch(setDarkMode(!isDarkMode))}>
+                            {isDarkMode ? <DarkMode /> : <LightMode sx={{ color: 'orange' }} />}
                         </IconButton>
                     </ListItem>
                 </List>
             </Toolbar>
+            { isLoading && (
+                <Box sx={{ width: '100%' }}>
+                    <LinearProgress color="secondary"/>
+                </Box>
+            )}
         </AppBar>
     )
 }

@@ -1,20 +1,35 @@
-import { useEffect, useState } from "react";
-import { Product } from "../../app/models/Product";
+//import { useEffect, useState } from "react";
+//import { Product } from "../../app/models/Product";
 import { useParams } from "react-router";
 import { Button, Divider, Grid2, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
+import { useFetchProductByIdQuery } from "./catalogApi";
+import { useAppDispatch } from "../../app/store/store";
+import { useEffect } from "react";
+import { setLoading } from "../../app/view/uiSlice";
 
 export default function ProductDetails() {
-    const {productId} = useParams();
-    const [product, setProduct] = useState<Product | null>();
+    const { productId } = useParams();
+
+    // Legacy solution, without RTK Query
+    // const [product, setProduct] = useState<Product | null>();
+
+    // useEffect(() => {
+    //     fetch(`https://localhost:5001/api/products/${productId}`)
+    //     .then(response => response.json())
+    //     .then(data => setProduct(data))
+    //     .catch(error => console.error(error));
+    // }, [productId]);
+
+    // if (!product) return <div>Loading...</div>;
+
+    const { data: product, isLoading } = useFetchProductByIdQuery(productId ? Number(productId) : 0);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
-        fetch(`https://localhost:5001/api/products/${productId}`)
-        .then(response => response.json())
-        .then(data => setProduct(data))
-        .catch(error => console.error(error));
-    }, [productId]);
-
-    if (!product) return <div>Loading...</div>;
+        dispatch(setLoading(isLoading));
+    }, [isLoading, dispatch]);
+        
+    if (isLoading || !product) return <div>Loading...</div>;
 
     const productDetails = [
         {label: 'Description', value: product.description},

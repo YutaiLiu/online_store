@@ -58,9 +58,12 @@ Redux Flow:
 4. React-Redux Provider will be notified, then the app and the component will also be notified
 5. Components that depend on the new state will be re-rendered to reflect the changes
 Redux Toolkit will simplify the Redux flow in development by simplify boilerplate codes and help developer introduce less bug to their project with Redux. It became the only recommended way to write Redux login since 2023.
-RTK will provide a new way of data fetching, it handle data fetching, caching, loading, error handling very well.
+RTK Query will provide a new way of data fetching, it handle data fetching, caching, loading, error handling very well.
 
-#  React hooks in React Redux, useSellector and useDispatcher
+# React hooks in React Redux, useSellector and useDispatcher
 BTW, React Redux is the official React bindings for Redux, but Redux can work with other framework for the same purpose as well
 useSelector, read calue of state from store
 useDispatch, dispatch changes to store
+
+# Apply RTK Query for data connection in frontend instead of using Thunk and Axios etc.
+Thunk is a function that is returned by another function and can be executed later. In Redux, a thunk allows action creators to return a function instead of a plain object.
