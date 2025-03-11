@@ -1,17 +1,11 @@
-import { useEffect } from "react";
 import ProductList from "./ProductList";
 import { useFetchProductsQuery } from "./catalogApi";
-import { useAppDispatch } from "../../app/store/store";
-import { setLoading } from "../../app/view/uiSlice";
+import { useAppSelector } from "../../store/store";
 
 // new way of fetching data with RTK Query
 export default function Catalog() {
-    const dispatch = useAppDispatch();
-    const { data, isLoading } = useFetchProductsQuery();
-
-    useEffect(() => {
-        dispatch(setLoading(isLoading));
-    }, [isLoading, dispatch]);
+    const { data } = useFetchProductsQuery();
+    const isLoading = useAppSelector(state => state.ui.isLoading);
 
     if (isLoading || !data) return <div>Loading...</div>;
 
@@ -26,7 +20,7 @@ export default function Catalog() {
 // you can use fetch() or axios
 
 // import { useEffect, useState } from "react";
-// import { Product } from "../../app/models/Product";
+// import { Product } from "../../models/Product";
 // import ProductList from "./ProductList";
 // export default function Catalog() {
 //     // React hook useState()

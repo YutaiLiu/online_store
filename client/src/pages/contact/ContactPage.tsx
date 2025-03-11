@@ -1,6 +1,6 @@
 import { decrement, increment } from "./counterReducer"
 import { Button, ButtonGroup, Typography } from "@mui/material"
-import { useAppDispatch, useAppSelector } from "../../app/store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
 
 export default function ContactPage() {
     const data = useAppSelector((state) => state.counter.value)

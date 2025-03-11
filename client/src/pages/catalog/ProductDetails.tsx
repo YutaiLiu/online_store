@@ -1,11 +1,9 @@
 //import { useEffect, useState } from "react";
-//import { Product } from "../../app/models/Product";
+//import { Product } from "../../models/Product";
 import { useParams } from "react-router";
 import { Button, Divider, Grid2, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
 import { useFetchProductByIdQuery } from "./catalogApi";
-import { useAppDispatch } from "../../app/store/store";
-import { useEffect } from "react";
-import { setLoading } from "../../app/view/uiSlice";
+import { useAppSelector } from "../../store/store";
 
 export default function ProductDetails() {
     const { productId } = useParams();
@@ -22,12 +20,8 @@ export default function ProductDetails() {
 
     // if (!product) return <div>Loading...</div>;
 
-    const { data: product, isLoading } = useFetchProductByIdQuery(productId ? Number(productId) : 0);
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        dispatch(setLoading(isLoading));
-    }, [isLoading, dispatch]);
+    const { data: product } = useFetchProductByIdQuery(productId ? Number(productId) : 0);
+    const isLoading = useAppSelector(state => state.ui.isLoading);
         
     if (isLoading || !product) return <div>Loading...</div>;
 

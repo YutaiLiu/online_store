@@ -2,7 +2,7 @@ import { DarkMode, LightMode, ShoppingCart } from "@mui/icons-material";
 import { AppBar, Badge, Box, IconButton, LinearProgress, List, ListItem, Toolbar, Typography } from "@mui/material";
 import { NavLink } from "react-router";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { setDarkMode } from "../view/uiSlice";
+import { setDarkMode } from "../store/uiSlice";
 
 const midLinks = [
     { title: 'Home', path: '/' },

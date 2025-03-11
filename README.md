@@ -67,3 +67,8 @@ useDispatch, dispatch changes to store
 
 # Apply RTK Query for data connection in frontend instead of using Thunk and Axios etc.
 Thunk is a function that is returned by another function and can be executed later. In Redux, a thunk allows action creators to return a function instead of a plain object.
+
+# Add exception middleware in our backend
+Create fake http error response controller in backend to mimic real error.
+Take the fake error response and build error handling experience in frontend.
+Add debugger to backend.
