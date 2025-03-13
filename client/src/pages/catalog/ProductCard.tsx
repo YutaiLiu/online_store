@@ -1,5 +1,5 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
-import { Product } from "../../app/models/Product";
+import { Product } from "../../models/Product";
 import { Link } from "react-router";
 
 export default function ProductCard(props: Product) {

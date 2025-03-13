@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Product } from "../../app/models/Product";
+import { Product } from "../../models/Product";
 import ProductCard from "./ProductCard";
 
 // receive props from parent component and define the type of the props
