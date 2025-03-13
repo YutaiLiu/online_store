@@ -2,6 +2,7 @@ using System;
 using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,26 +19,11 @@ namespace API.Controllers
 
             if (cart == null) cart = await CreateCart();
 
-            return new ShoppingCartDto
-            {
-                Id = cart.Id,
-                CartId = cart.CartId,
-                Items = cart.Items.Select(x => new ShoppingCartItemDto
-                {
-                    ProductId = x.ProductId,
-                    Name = x.Product.Name,
-                    Price = x.Product.Price,
-                    Description = x.Product.Description,
-                    Type = x.Product.Type,
-                    PictureURL = x.Product.PictureURL,
-                    Brand = x.Product.Brand,
-                    Quantity = x.Quantity
-                }).ToList()
-            };
+            return cart.ToDto();
         }
 
         [HttpPost("add")]
-        public async Task<ActionResult> AddToCart(int productId, int quantity)
+        public async Task<ActionResult<ShoppingCartDto>> AddToCart(int productId, int quantity)
         {
             var product = await context.Products.FindAsync(productId);
 
@@ -67,7 +53,34 @@ namespace API.Controllers
 
             if (result == 0) return BadRequest("Failed to save changes");
 
-            return Ok();
+            return cart.ToDto();
+        }
+
+        [HttpPost("remove")]
+        public async Task<ActionResult<ShoppingCartDto>> RemoveFromCart(int productId, int quantity)
+        {
+            var product = await context.Products.FindAsync(productId);
+
+            if (product == null) return BadRequest("Product not found");
+
+            var cart = await GetCart();
+
+            if (cart == null) return BadRequest("Cart not found");
+
+            try
+            {
+                cart.RemoveItem(product, quantity);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            var result = await context.SaveChangesAsync();
+
+            if (result == 0) return BadRequest("Failed to save changes");
+
+            return cart.ToDto();
         }
 
         private async Task<ShoppingCart?> GetCart()

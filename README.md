@@ -85,4 +85,7 @@ Cons: 4KB size. Performance impact (cause Cookies will be sent with every http r
 Pros: Persistent. Secure. Scalable. Analytics.
 Cons: Complex. Server load. Online only.
 
-# Add new table to store shopping cart data in our data base and add DTOs
+# Add new table to store shopping cart data in our data base
+
+# Add, extension methods and DTOs (Data Transfer Object) to shopping cart data model
+Purpose of DTO: Ensure only the necessary data is sent to clients, imporve security and performance. And it also make the code resuable and cleaner.
