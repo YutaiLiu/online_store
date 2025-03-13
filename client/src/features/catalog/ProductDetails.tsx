@@ -66,7 +66,7 @@ export default function ProductDetails() {
                         <TextField
                             variant='outlined'
                             type='number'
-                            label='Quantity in basket'
+                            label='Item quantity add to cart'
                             fullWidth
                             defaultValue={1}
                         />

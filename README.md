@@ -67,3 +67,15 @@ useDispatch, dispatch changes to store
 
 # Apply RTK Query for data connection in frontend instead of using Thunk and Axios etc.
 Thunk is a function that is returned by another function and can be executed later. In Redux, a thunk allows action creators to return a function instead of a plain object.
+
+# Add shopping cart feature
+Where to store the shopping cart?
+1. Store in user LocalStorage
+Pros: Simple. Persistent(won't disappear). Easy to access. Offline.
+Cons: Unware of user's item. Limited storage. Security risk.
+2. Store in Cookies
+Pros: Ware of user's choices. Controlled persistence.
+Cons: 4KB size. Performance impact (cause Cookies will be sent with every http request).
+3. Store in DB
+Pros: Persistent. Secure. Scalable. Analytics.
+Cons: Complex. Server load. Online only.
