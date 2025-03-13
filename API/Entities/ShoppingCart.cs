@@ -15,7 +15,6 @@ public class ShoppingCart
     public void AddItem(Product product, int quantity)
     {
         if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero");
-        if (product == null) throw new ArgumentNullException(nameof(product));
 
         var existingItem = FindItem(product.Id);
 
@@ -39,7 +38,6 @@ public class ShoppingCart
     public void RemoveItem(Product product, int quantity)
     {
         if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero");
-        if (product == null) throw new ArgumentNullException(nameof(product));
 
         var existingItem = FindItem(product.Id);
 
@@ -58,7 +56,7 @@ public class ShoppingCart
         }
     }
 
-    public ShoppingCartItem FindItem(int productId)
+    public ShoppingCartItem? FindItem(int productId)
     {
         return Items.FirstOrDefault(item => item.ProductId == productId);
     }

@@ -84,3 +84,5 @@ Cons: 4KB size. Performance impact (cause Cookies will be sent with every http r
 3. Store in DB
 Pros: Persistent. Secure. Scalable. Analytics.
 Cons: Complex. Server load. Online only.
+
+# Add new table to store shopping cart data in our data base and add DTOs
