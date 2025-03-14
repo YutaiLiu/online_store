@@ -48,7 +48,7 @@ export default function NavBar() {
                 </List>
                 <List sx={{ display: 'flex', marginLeft: 'auto', right: '0rem' }}>
                     <ListItem>
-                        <IconButton size="large" color="inherit">
+                        <IconButton component={NavLink} to='/shopping-cart' size="large" color="inherit">
                             <Badge badgeContent={4} color="error">
                                 <ShoppingCart />
                             </Badge>

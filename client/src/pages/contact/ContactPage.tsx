@@ -1,4 +1,4 @@
-import { decrement, increment } from "./counterReducer"
+import { decrement, increment } from "../../reducersLegacy/counterReducerForPractice"
 import { Button, ButtonGroup, Typography } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "../../store/store";
 

@@ -2,7 +2,7 @@
 //import { Product } from "../../models/Product";
 import { useParams } from "react-router";
 import { Button, Divider, Grid2, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
-import { useFetchProductByIdQuery } from "./catalogApi";
+import { useFetchProductByIdQuery } from "../../api/catalogApi";
 import { useAppSelector } from "../../store/store";
 
 export default function ProductDetails() {

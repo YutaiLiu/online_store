@@ -107,6 +107,8 @@ namespace API.Controllers
 
             var cookieOptions = new CookieOptions
             {
+                SameSite = SameSiteMode.None,
+                Secure = true,
                 IsEssential = true,
                 Expires = DateTime.UtcNow.AddDays(30)
             };

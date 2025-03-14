@@ -29,7 +29,7 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors(policy =>
 {
-    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:3000");
+    policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("https://localhost:3000");
 });
 
 app.MapControllers();

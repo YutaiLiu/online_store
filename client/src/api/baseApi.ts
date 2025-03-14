@@ -3,7 +3,10 @@ import { setLoading } from "../store/uiSlice";
 import { toast } from "react-toastify";
 import { router } from "../routes/Routes";
 
-const baseQuery = fetchBaseQuery({ baseUrl: 'https://localhost:5001/api' });
+const baseQuery = fetchBaseQuery({ 
+    baseUrl: 'https://localhost:5001/api',
+    credentials: 'include',
+ });
 
 const sleep = (ms: number = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
 

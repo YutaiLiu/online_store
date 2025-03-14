@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { Product } from "../../models/Product";
-import { baseQuryWithErrorHandling } from "../../api/baseApi";
+import { Product } from "../models/Product";
+import { baseQuryWithErrorHandling } from "./baseApi";
 
 type ProductResponse = Product[];
 
@@ -15,7 +15,7 @@ export const catalogApi = createApi({
         fetchProducts: builder.query<ProductResponse, void>({
             query: () => '/products',
         }),
-        fetchProductById: builder.query<Product, number>({
+        fetchProductById: builder.query<Product, { id: number }>({
             query: (id) => `/products/${id}`,
         }),
     })

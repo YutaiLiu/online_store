@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQuryWithErrorHandling } from "../../api/baseApi";
+import { baseQuryWithErrorHandling } from "./baseApi";
 
 // note that the import library
 // createApi will generate hooks for us to use in our components
