@@ -1,11 +1,11 @@
 import ProductList from "./ProductList";
 import { useFetchProductsQuery } from "../../api/catalogApi";
-import { useAppSelector } from "../../store/store";
+//import { useAppSelector } from "../../store/store";
 
 // new way of fetching data with RTK Query
 export default function Catalog() {
     const { data } = useFetchProductsQuery();
-    const isLoading = useAppSelector(state => state.ui.isLoading);
+    //const isLoading = useAppSelector(state => state.ui.isLoading);
 
     //if (isLoading) return <div>Loading...</div>;
     if (!data) return <div>Loading...</div>;

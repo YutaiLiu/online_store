@@ -5,6 +5,7 @@ import { router } from "../routes/Routes";
 
 const baseQuery = fetchBaseQuery({ 
     baseUrl: 'https://localhost:5001/api',
+    // Including credentials in the request allows the API to set cookies in the browser
     credentials: 'include',
  });
 

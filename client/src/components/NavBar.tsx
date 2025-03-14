@@ -27,6 +27,7 @@ export default function NavBar() {
     const dispatch = useAppDispatch();
     const isLoading = useAppSelector(state => state.ui.isLoading);
     const isDarkMode = useAppSelector(state => state.ui.isDarkMode);
+    const catItemsCount = useAppSelector(state => state.ui.cartItemsCount);
 
     return (
         <AppBar position="static">
@@ -49,7 +50,7 @@ export default function NavBar() {
                 <List sx={{ display: 'flex', marginLeft: 'auto', right: '0rem' }}>
                     <ListItem>
                         <IconButton component={NavLink} to='/shopping-cart' size="large" color="inherit">
-                            <Badge badgeContent={4} color="error">
+                            <Badge badgeContent={catItemsCount} color="error">
                                 <ShoppingCart />
                             </Badge>
                         </IconButton>

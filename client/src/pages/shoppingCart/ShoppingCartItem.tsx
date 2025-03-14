@@ -2,12 +2,16 @@ import { Item } from "../../models/ShoppingCart";
 import { Box } from "@mui/system";
 import { Grid2, IconButton, Paper, Typography } from "@mui/material";
 import { Add, Close, Remove } from "@mui/icons-material";
+import { useAddItemToCartMutation, useRemoveItemFromCartMutation } from "../../api/ShoppingCartApi";
 
 type Props = {
     item: Item
 }
 
 export default function ShoppingCartItem(props: Props) {
+    const [addItemToCart] = useAddItemToCartMutation();
+    const [removeItemFromCart] = useRemoveItemFromCartMutation();
+
     // rem is the unit of measurement that is relative to the font-size of the root element
     // 1rem is equal to the font-size of the root element
     // by default, 1 rem = 16px
@@ -60,6 +64,7 @@ export default function ShoppingCartItem(props: Props) {
                     </Box>
                     <Grid2 container spacing={3} alignItems={'center'}>
                         <IconButton 
+                            onClick={() => removeItemFromCart({productId: props.item.productId, quantity: 1})}
                             size='small'
                             color='error'
                             sx={{ 
@@ -72,6 +77,7 @@ export default function ShoppingCartItem(props: Props) {
                         </IconButton>
                         <Typography>{props.item.quantity}</Typography>
                         <IconButton 
+                            onClick={() => addItemToCart({productId: props.item.productId, quantity: 1})}
                             size='small'
                             color='success'
                             sx={{ 
@@ -86,6 +92,7 @@ export default function ShoppingCartItem(props: Props) {
                 </Box>
             </Box>
             <IconButton 
+                onClick={() => removeItemFromCart({productId: props.item.productId, quantity: props.item.quantity})}
                 size='small'
                 color='error'
                 sx={{ 

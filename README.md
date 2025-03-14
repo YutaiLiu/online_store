@@ -89,3 +89,5 @@ Cons: Complex. Server load. Online only.
 
 # Add, extension methods and DTOs (Data Transfer Object) to shopping cart data model
 Purpose of DTO: Ensure only the necessary data is sent to clients, imporve security and performance. And it also make the code resuable and cleaner.
+
+# Including credentials in the request allows the API to set cookies in the browser, and add cache invalidation logic
