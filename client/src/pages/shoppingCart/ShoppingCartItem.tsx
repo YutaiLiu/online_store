@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import { Grid2, IconButton, Paper, Typography } from "@mui/material";
 import { Add, Close, Remove } from "@mui/icons-material";
 import { useAddItemToCartMutation, useRemoveItemFromCartMutation } from "../../api/ShoppingCartApi";
+import { currencyFormat } from "../../util";
 
 type Props = {
     item: Item
@@ -56,10 +57,10 @@ export default function ShoppingCartItem(props: Props) {
                         }}
                     >
                         <Typography sx={{ fontSize: '1rem' }}>
-                            ${(props.item.price / 100).toFixed(2)} x {props.item.quantity}
+                            {currencyFormat(props.item.price)} x {props.item.quantity}
                         </Typography>
                         <Typography sx={{ fontSize: '1rem' }} color="primary">
-                            ${(props.item.price * props.item.quantity / 100).toFixed(2)}
+                            {currencyFormat(props.item.price * props.item.quantity)}
                         </Typography>
                     </Box>
                     <Grid2 container spacing={3} alignItems={'center'}>

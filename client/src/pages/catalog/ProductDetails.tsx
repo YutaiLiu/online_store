@@ -3,7 +3,10 @@
 import { useParams } from "react-router";
 import { Button, Divider, Grid2, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
 import { useFetchProductByIdQuery } from "../../api/catalogApi";
-import { useAppSelector } from "../../store/store";
+import { currencyFormat } from "../../util";
+import { useAddItemToCartMutation } from "../../api/ShoppingCartApi";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function ProductDetails() {
     const { productId } = useParams();
@@ -20,10 +23,30 @@ export default function ProductDetails() {
 
     // if (!product) return <div>Loading...</div>;
 
-    const { data: product } = useFetchProductByIdQuery(productId ? Number(productId) : 0);
-    const isLoading = useAppSelector(state => state.ui.isLoading);
+    const [addItemToCart, {isLoading}] = useAddItemToCartMutation();
+    const { data: product } = useFetchProductByIdQuery(productId ? { id: parseInt(productId) } : { id: 0});
+    const [quantity, setQuantity] = useState(1);
         
-    if (isLoading || !product) return <div>Loading...</div>;
+    if (!product) return <div>Loading...</div>;
+
+    const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (parseInt(e.target.value) < 1 || isNaN(parseInt(e.target.value))) {
+            setQuantity(0);
+            toast.error('Quantity must be a number and at least 1');
+            return;
+        }
+        setQuantity(parseInt(e.target.value));
+        console.log(quantity);
+    }
+
+    const handleAddToCart = () => {
+        if (quantity < 1 || isNaN(quantity)) {
+            toast.error('Quantity must be a number and at least 1');
+            return;
+        }
+        addItemToCart({productId: product.id, quantity: quantity});
+        console.log(quantity);
+    }
 
     const productDetails = [
         {label: 'Description', value: product.description},
@@ -40,7 +63,7 @@ export default function ProductDetails() {
             <Grid2 size={6}>
                 <Typography variant='h3'>{product?.name}</Typography>
                 <Divider sx={{ mb: 2 }} />
-                <Typography variant='h4' color='secondary'>${((product?.price ?? 0) / 100).toFixed(2)}</Typography>
+                <Typography variant='h4' color='secondary'>{currencyFormat(product.price)}</Typography>
                 <TableContainer>
                     <Table
                         sx={{ '& td': { fontSize: '1rem' } }}
@@ -63,10 +86,14 @@ export default function ProductDetails() {
                             label='Item quantity add to cart'
                             fullWidth
                             defaultValue={1}
+                            disabled={product.stockQuantity === 0 || isLoading}
+                            onChange={handleQuantityChange}
                         />
                     </Grid2>
                     <Grid2 size={6}>
                         <Button
+                            onClick={handleAddToCart}
+                            loading={isLoading}
                             sx={{ height: '100%' }}
                             color="primary"
                             size="large"

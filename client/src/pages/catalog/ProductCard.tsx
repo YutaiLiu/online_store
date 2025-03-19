@@ -2,6 +2,7 @@ import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@
 import { Product } from "../../models/Product";
 import { Link } from "react-router";
 import { useAddItemToCartMutation } from "../../api/ShoppingCartApi";
+import { currencyFormat } from "../../util";
 
 export default function ProductCard(props: Product) {
     const [addItemToCart, {isLoading}] = useAddItemToCartMutation();
@@ -34,7 +35,7 @@ export default function ProductCard(props: Product) {
                     variant='h6'
                     sx={{ color: 'secondary.main' }}
                 >
-                    ${(props.price / 100).toFixed(2)}
+                    {currencyFormat(props.price)}
                 </Typography>
             </CardContent>
             <CardActions
