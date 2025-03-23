@@ -1,6 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { Product } from "../models/Product";
 import { baseQuryWithErrorHandling } from "./baseApi";
+import { Filter } from "../models/Filter";
 
 type ProductResponse = Product[];
 
@@ -18,8 +19,11 @@ export const catalogApi = createApi({
         fetchProductById: builder.query<Product, { id: number }>({
             query: ({ id }) => `/products/${id}`,
         }),
+        fetchFilter: builder.query<Filter, void>({
+            query: () => 'products/filter',
+        }),
     })
 });
 
 // Export the auto-generated hooks for use in components
-export const { useFetchProductsQuery, useFetchProductByIdQuery } = catalogApi;
+export const { useFetchProductsQuery, useFetchProductByIdQuery, useFetchFilterQuery } = catalogApi;
