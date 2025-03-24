@@ -5,6 +5,7 @@ import { catalogApi } from "../api/catalogApi";
 import { uiSlice } from "./uiSlice";
 import { errorApi } from "../api/errorApi";
 import { ShoppingCartApi } from "../api/ShoppingCartApi";
+import { catalogSlice } from "./catalogSlice";
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
         [catalogApi.reducerPath]: catalogApi.reducer,
         [errorApi.reducerPath]: errorApi.reducer,
         [ShoppingCartApi.reducerPath]: ShoppingCartApi.reducer,
+        catalog: catalogSlice.reducer,
         counter: counterSlice.reducer,
         ui: uiSlice.reducer
     },

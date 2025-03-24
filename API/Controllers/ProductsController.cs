@@ -39,8 +39,8 @@ namespace API.Controllers
                 query, requestParams.PageNumber, requestParams.PageSize);
 
             return Ok(new {
-                products.Metadata,
-                products
+                products,
+                products.Metadata
             });
         }
 
