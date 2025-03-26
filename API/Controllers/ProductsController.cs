@@ -29,7 +29,7 @@ namespace API.Controllers
             // build query
             var query = context.Products
                 .ApplySort(requestParams.OrderBy)
-                .Search(requestParams.Search)
+                .Search(requestParams.SearchTerm)
                 .ApplyFilter(requestParams.Brands, requestParams.Types)
                 .AsQueryable();
 
@@ -40,7 +40,7 @@ namespace API.Controllers
 
             return Ok(new {
                 products,
-                products.Metadata
+                products.metaData
             });
         }
 

@@ -1,14 +1,20 @@
 import ProductList from "./ProductList";
 import { useFetchProductsQuery } from "../../api/catalogApi";
-import { Grid2 } from "@mui/material";
+import { Grid2, Typography } from "@mui/material";
 import Filter from "../../components/Filter";
-import { useAppSelector } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { setPageNumber } from "../../store/catalogSlice";
+import AppPagination from "../../components/AppPanination";
 //import { useAppSelector } from "../../store/store";
 
 // new way of fetching data with RTK Query
 export default function Catalog() {
     const productParams = useAppSelector(state => state.catalog);
+    // useFetchProductsQuery is a hook that RTK Query creates
+    // it will monitor the state of the query and update the component when the state changes
     const { data } = useFetchProductsQuery(productParams);
+    const dispatch = useAppDispatch();
+
     //const isLoading = useAppSelector(state => state.ui.isLoading);
 
     //if (isLoading) return <div>Loading...</div>;
@@ -20,7 +26,14 @@ export default function Catalog() {
                 <Filter />
             </Grid2>
             <Grid2 size={9}>
-                <ProductList products={data.products} />
+                {data.products && data.products.length > 0 ? (
+                    <>
+                        <ProductList products={data.products} />
+                        <AppPagination metaData={data.metaData} onPageChange={(page: number) => dispatch(setPageNumber(page))}/>
+                    </>
+                ) : (
+                    <Typography variant="h5">No products found</Typography>
+                )}
             </Grid2>
         </Grid2>
     );

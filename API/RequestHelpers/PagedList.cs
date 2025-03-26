@@ -9,11 +9,11 @@ namespace API.RequestHelpers;
 // it's a custome List data structure that will be used to store paginated data
 public class PagedList<T> : List<T>
 {
-    public PaginationMetaData Metadata { get; set; }
+    public PaginationMetaData metaData { get; set; }
 
     public PagedList(List<T> items, int count, int pageNumber, int pageSize)
     {
-        Metadata = new PaginationMetaData
+        metaData = new PaginationMetaData
         {
             TotalCount = count,
             PageSize = pageSize,

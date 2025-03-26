@@ -11,11 +11,11 @@ public static class ProductExtension
         {
             case "name":
                 return query.OrderBy(p => p.Name);
-            case "name desc":
+            case "nameDesc":
                 return query.OrderByDescending(p => p.Name);
             case "price":
                 return query.OrderBy(p => p.Price);
-            case "price desc":
+            case "priceDesc":
                 return query.OrderByDescending(p => p.Price);
             default:
                 return query;

@@ -4,8 +4,8 @@ export type Filter = {
 }
 
 export const SortOptions = [
-    { value: 'price', label: 'Price: High to low' },
-    { value: 'price decs', label: 'Price: Low to high' },
     { value: 'name', label: 'Name: A to Z' },
-    { value: 'name decs', label: 'Name: Z to A' },
+    { value: 'nameDesc', label: 'Name: Z to A' },
+    { value: 'priceDesc', label: 'Price: High to low' },
+    { value: 'price', label: 'Price: Low to high' },
 ];
