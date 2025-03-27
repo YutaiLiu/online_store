@@ -1,4 +1,7 @@
 using API.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 // Note:
 // Apply Entity Framework Core to the project
 // Pros:
@@ -12,7 +15,7 @@ using API.Entities;
 using Microsoft.EntityFrameworkCore;
 namespace API.Data;
 
-public class StoreContext(DbContextOptions options) : DbContext(options)
+public class StoreContext(DbContextOptions options) : IdentityDbContext<User>(options)
 {
     // Note:
     // Above called primary constructor
@@ -25,4 +28,14 @@ public class StoreContext(DbContextOptions options) : DbContext(options)
     public required DbSet<Product> Products { get; set; }
 
     public required DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        builder.Entity<IdentityRole>().HasData(
+            new IdentityRole { Id = "e9711380-2ce6-4deb-b66f-fa35c4b83fc8", Name = "Admin", NormalizedName = "ADMIN" },
+            new IdentityRole { Id = "682e05d2-78d7-4e3d-9639-0082f4284277", Name = "Customer", NormalizedName = "CUSTOMER" }
+        );
+    }
 }
