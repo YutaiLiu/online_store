@@ -96,5 +96,8 @@ Purpose of DTO: Ensure only the necessary data is sent to clients, imporve secur
 # Add authentication and authorization with ASP.NET Identity
 When user set up their password, before hashing it our app will "salted" it first, aka add a random string to the password, so that different user can have same password but diffrent hashing results.
 Cons: Not suited for distributed apps and hard to customization. Designed for single server application.
-And we are gping to implement authentication with Cookie, Cookie is only available in browsers so if you are developing a mobile app, probably you need using a token authentication.
+And we are going to implement authentication with Cookie, Cookie is only available in browsers so if you are developing a mobile app, probably you need using a token authentication.
+And Cookie is Http only, means it can only be modified on server-side, like login/logout endpoint etc. So it's more secure than token, because token need to be store somewhere, like local storage, and it's accessible by JavaScript.
+
+Note: POST api/login endpoint will take "username" as "email" in the body of request when it valid a user
 
