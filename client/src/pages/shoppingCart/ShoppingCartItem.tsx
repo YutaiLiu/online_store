@@ -2,7 +2,7 @@ import { Item } from "../../models/ShoppingCart";
 import { Box } from "@mui/system";
 import { Grid2, IconButton, Paper, Typography } from "@mui/material";
 import { Add, Close, Remove } from "@mui/icons-material";
-import { useAddItemToCartMutation, useRemoveItemFromCartMutation } from "../../api/ShoppingCartApi";
+import { useAddItemToCartMutation, useRemoveItemFromCartMutation } from "../../api/shoppingCartApi";
 import { currencyFormat } from "../../util";
 
 type Props = {

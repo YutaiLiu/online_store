@@ -1,5 +1,5 @@
 import { Grid2 } from "@mui/material";
-import { useFetchShoppingCartQuery } from "../../api/ShoppingCartApi";
+import { useFetchShoppingCartQuery } from "../../api/shoppingCartApi";
 import ShoppingCartItem from "./ShoppingCartItem";
 import OrderSummary from "../../components/OrderSummary";
 

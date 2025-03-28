@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQuryWithErrorHandling } from "./baseApi";
+import { baseQueryWithErrorHandling } from "./baseApi";
 
 // note that the import library
 // createApi will generate hooks for us to use in our components
@@ -8,7 +8,7 @@ import { baseQuryWithErrorHandling } from "./baseApi";
 // endpoints is an object that contains all the endpoints we want to use
 export const errorApi = createApi({
     reducerPath: "errorApi",
-    baseQuery: baseQuryWithErrorHandling,
+    baseQuery: baseQueryWithErrorHandling,
     endpoints: (builder) => ({
         get400Error: builder.query<void, void>({
             query: () => 'buggy/bad-request',

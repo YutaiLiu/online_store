@@ -11,7 +11,7 @@ const baseQuery = fetchBaseQuery({
 
 const sleep = (ms: number = 1000) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export const baseQuryWithErrorHandling = async (
+export const baseQueryWithErrorHandling = async (
     args: string | FetchArgs, 
     api: BaseQueryApi,
     extraOptions: object) => {

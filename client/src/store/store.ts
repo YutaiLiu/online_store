@@ -4,15 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { catalogApi } from "../api/catalogApi";
 import { uiSlice } from "./uiSlice";
 import { errorApi } from "../api/errorApi";
-import { ShoppingCartApi } from "../api/ShoppingCartApi";
+import { shoppingCartApi } from "../api/shoppingCartApi";
 import { catalogSlice } from "./catalogSlice";
+import { accountApi } from "../api/accountApi";
 
 export const store = configureStore({
     reducer: {
         // this is RTK Query reducer
         [catalogApi.reducerPath]: catalogApi.reducer,
         [errorApi.reducerPath]: errorApi.reducer,
-        [ShoppingCartApi.reducerPath]: ShoppingCartApi.reducer,
+        [shoppingCartApi.reducerPath]: shoppingCartApi.reducer,
+        [accountApi.reducerPath]: accountApi.reducer,
         catalog: catalogSlice.reducer,
         counter: counterSlice.reducer,
         ui: uiSlice.reducer
@@ -23,7 +25,8 @@ export const store = configureStore({
         getDefaultMiddleware().concat(
             catalogApi.middleware, 
             errorApi.middleware, 
-            ShoppingCartApi.middleware
+            shoppingCartApi.middleware,
+            accountApi.middleware
         )
 })
 

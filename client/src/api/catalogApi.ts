@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { Product } from "../models/Product";
-import { baseQuryWithErrorHandling } from "./baseApi";
+import { baseQueryWithErrorHandling } from "./baseApi";
 import { Filter } from "../models/Filter";
 import { ProductResponse } from "../models/ProductResponse";
 import { ProductParams } from "../models/ProductParams";
@@ -11,7 +11,7 @@ import { ProductParams } from "../models/ProductParams";
 // endpoints is an object that contains all the endpoints we want to use
 export const catalogApi = createApi({
     reducerPath: 'catalogApi',
-    baseQuery: baseQuryWithErrorHandling,
+    baseQuery: baseQueryWithErrorHandling,
     endpoints: (builder) => ({
         fetchProducts: builder.query<ProductResponse, ProductParams>({
             query: (productParams) => {

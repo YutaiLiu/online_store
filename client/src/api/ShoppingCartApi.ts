@@ -1,12 +1,12 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQuryWithErrorHandling } from "./baseApi";
+import { baseQueryWithErrorHandling } from "./baseApi";
 import { ShoppingCart } from "../models/ShoppingCart";
 import { setCartItemsCount } from "../store/uiSlice";
 import { toast } from "react-toastify";
 
-export const ShoppingCartApi = createApi({
+export const shoppingCartApi = createApi({
     reducerPath: 'shoppingCartApi',
-    baseQuery: baseQuryWithErrorHandling,
+    baseQuery: baseQueryWithErrorHandling,
     // The `tagTypes` property is used to define the tags that the API will use to invalidate cache entries
     // after a mutation is performed. In this case, the API will invalidate the cache entry with the tag `ShoppingCart`
     // after the `addItemToCart` mutation is performed.
@@ -54,4 +54,4 @@ export const ShoppingCartApi = createApi({
     })
 });
 
-export const { useFetchShoppingCartQuery, useAddItemToCartMutation, useRemoveItemFromCartMutation } = ShoppingCartApi;
+export const { useFetchShoppingCartQuery, useAddItemToCartMutation, useRemoveItemFromCartMutation } = shoppingCartApi;

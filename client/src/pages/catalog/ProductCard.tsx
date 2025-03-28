@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import { Product } from "../../models/Product";
 import { Link } from "react-router";
-import { useAddItemToCartMutation } from "../../api/ShoppingCartApi";
+import { useAddItemToCartMutation } from "../../api/shoppingCartApi";
 import { currencyFormat } from "../../util";
 
 export default function ProductCard(props: Product) {
