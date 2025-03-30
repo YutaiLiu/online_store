@@ -1,20 +1,28 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithErrorHandling } from "./baseApi";
 import { User } from "../models/User";
+import { LoginSchema } from "../pages/login/loginSchema";
+import { router } from "../routes/Routes";
 
 export const accountApi = createApi({
     reducerPath: "accountApi",
     baseQuery: baseQueryWithErrorHandling,
+    tagTypes: ["UserInfo"],
     endpoints: (builder) => ({
         // use mutation method for POST requests
-        login: builder.mutation<void, object>({
+        login: builder.mutation<void, LoginSchema>({
             // creds means the credentials we provide in the body of the request
             query: (creds) => {
                 return {
-                    url: "login?useCookie=true",
+                    url: "login?useCookies=true",
                     method: "POST",
                     body: creds,
                 }
+            },
+            invalidatesTags: ["UserInfo"],
+            async onQueryStarted(_, { queryFulfilled }) {
+                await queryFulfilled;
+                router.navigate("/catalog");
             }
         }),
         register: builder.mutation<void, object>({
@@ -24,9 +32,11 @@ export const accountApi = createApi({
                     method: "POST",
                     body: creds,
                 }
-            }
+            },
+            invalidatesTags: ["UserInfo"],
         }),
         userInfo: builder.query<User, void>({
+            providesTags: ["UserInfo"],
             query: () => "account/user-info"
         }),
         logout: builder.mutation<void, void>({
@@ -35,6 +45,11 @@ export const accountApi = createApi({
                     url: "account/logout",
                     method: "POST",
                 }
+            },
+            invalidatesTags: ["UserInfo"],
+            async onQueryStarted(_, { queryFulfilled }) {
+                await queryFulfilled;
+                router.navigate("/login");
             }
         })
     })

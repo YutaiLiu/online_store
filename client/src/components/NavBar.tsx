@@ -3,6 +3,8 @@ import { AppBar, Badge, Box, IconButton, LinearProgress, List, ListItem, Toolbar
 import { NavLink } from "react-router";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { setDarkMode } from "../store/uiSlice";
+import UserMenu from "./UserMenu";
+import { useUserInfoQuery } from "../api/accountApi";
 
 const midLinks = [
     { title: 'Home', path: '/' },
@@ -17,7 +19,7 @@ const rightLinks = [
 ]
 
 const NavStyle = {
-    color: 'inherit', 
+    color: 'inherit',
     typography: 'h6',
     '&:hover': { color: 'orange' },
     '&.active': { color: 'orange' }
@@ -25,6 +27,7 @@ const NavStyle = {
 
 export default function NavBar() {
     const dispatch = useAppDispatch();
+    const { data: user } = useUserInfoQuery();
     const isLoading = useAppSelector(state => state.ui.isLoading);
     const isDarkMode = useAppSelector(state => state.ui.isDarkMode);
     const catItemsCount = useAppSelector(state => state.ui.cartItemsCount);
@@ -35,9 +38,9 @@ export default function NavBar() {
                 <Typography variant="h6">
                     Online Store
                 </Typography>
-                <List sx={{ display: 'flex'}}>
+                <List sx={{ display: 'flex' }}>
                     {midLinks.map(item => (
-                        <ListItem 
+                        <ListItem
                             key={item.title}
                             component={NavLink}
                             to={item.path}
@@ -54,27 +57,29 @@ export default function NavBar() {
                                 <ShoppingCart />
                             </Badge>
                         </IconButton>
-                    </ListItem>
-                    {rightLinks.map(item => (
-                        <ListItem 
-                            key={item.title}
-                            component={NavLink}
-                            to={item.path}
-                            sx={NavStyle}
-                        >
-                            {item.title}
-                        </ListItem>
-                    ))}
-                    <ListItem>
+                        {user ? (
+                            <UserMenu user={user} />
+                        ) : (
+                            rightLinks.map(item => (
+                                <ListItem
+                                    key={item.title}
+                                    component={NavLink}
+                                    to={item.path}
+                                    sx={NavStyle}
+                                >
+                                    {item.title}
+                                </ListItem>
+                            ))
+                        )}
                         <IconButton onClick={() => dispatch(setDarkMode(!isDarkMode))}>
                             {isDarkMode ? <DarkMode /> : <LightMode sx={{ color: 'orange' }} />}
                         </IconButton>
                     </ListItem>
                 </List>
             </Toolbar>
-            { isLoading && (
+            {isLoading && (
                 <Box sx={{ width: '100%' }}>
-                    <LinearProgress color="secondary"/>
+                    <LinearProgress color="secondary" />
                 </Box>
             )}
         </AppBar>
