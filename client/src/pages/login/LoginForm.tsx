@@ -1,20 +1,28 @@
 import { LockOutlined } from "@mui/icons-material";
 import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useForm } from "react-hook-form";
 import { loginSchema, LoginSchema } from "./loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLoginMutation } from "../../api/accountApi";
 
 export default function LoginForm() {
-    const [ sendLoginrequest, {isLoading} ] = useLoginMutation();
-    const {register, handleSubmit, formState: {errors}} = useForm<LoginSchema>({
+    const [sendLoginRequest, { isLoading }] = useLoginMutation();
+    const location = useLocation();
+    const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm<LoginSchema>({
         mode: 'onTouched',
         resolver: zodResolver(loginSchema),
     });
 
     const onSubmit = async (data: LoginSchema) => {
-        await sendLoginrequest(data);
+        try {
+            await sendLoginRequest(data).unwrap();
+        }
+        catch {
+            // error.data.detail === "Failed"
+            setError("email", { message: "Your email might be wrong. Please try again." });
+            setError("password", { message: "Your password might be wrong. Please try again." });
+        }
     }
 
     return (
@@ -49,12 +57,12 @@ export default function LoginForm() {
                         error={!!errors.password}
                         helperText={errors.password ? errors.password.message : ""}
                     />
-                    <Button variant="contained" type="submit" disabled={isLoading || !!errors.email || !!errors.password}>
+                    <Button variant="contained" type="submit" disabled={isLoading || !isValid}>
                         Sign in
                     </Button>
                     <Typography sx={{ textAlign: "center" }}>
-                        Don't have an account? 
-                        <Typography component={Link} to='/register' color="secondary.primary" sx={{ml: 1}}>Sign up</Typography>
+                        Don't have an account?
+                        <Typography component={Link} to='/register' color="secondary.primary" sx={{ ml: 1 }}>Register here</Typography>
                     </Typography>
                 </Box>
             </Box>

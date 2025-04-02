@@ -36,7 +36,6 @@ export default function ProductDetails() {
             return;
         }
         setQuantity(parseInt(e.target.value));
-        console.log(quantity);
     }
 
     const handleAddToCart = () => {
@@ -45,7 +44,6 @@ export default function ProductDetails() {
             return;
         }
         addItemToCart({productId: product.id, quantity: quantity});
-        console.log(quantity);
     }
 
     const productDetails = [

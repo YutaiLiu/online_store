@@ -10,6 +10,7 @@ import NotFound from "../components/errors/NotFound";
 import ShoppingCartPage from "../pages/shoppingCart/ShoppingCartPage";
 import { CheckoutPage } from "../pages/checkout/CheckoutPage";
 import LoginForm from "../pages/login/LoginForm";
+import RegisterForm from "../pages/register/RegisterForm";
 
 export const router = createBrowserRouter([
     {
@@ -24,6 +25,7 @@ export const router = createBrowserRouter([
             {path: "/shopping-cart", element: <ShoppingCartPage />},
             {path: "/checkout", element: <CheckoutPage />},
             {path: "/login", element: <LoginForm />},
+            {path: "/register", element: <RegisterForm />},
             {path: "/server-error", element: <ServerError />},
             {path: "/not-found", element: <NotFound />},
             {path: "*", element: <NotFound />}

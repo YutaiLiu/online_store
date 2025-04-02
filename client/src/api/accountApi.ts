@@ -3,6 +3,7 @@ import { baseQueryWithErrorHandling } from "./baseApi";
 import { User } from "../models/User";
 import { LoginSchema } from "../pages/login/loginSchema";
 import { router } from "../routes/Routes";
+import { toast } from "react-toastify";
 
 export const accountApi = createApi({
     reducerPath: "accountApi",
@@ -33,7 +34,10 @@ export const accountApi = createApi({
                     body: creds,
                 }
             },
-            invalidatesTags: ["UserInfo"],
+            async onQueryStarted(_, { queryFulfilled }) {
+                await queryFulfilled;
+                toast.success("Registration is successful, now you can start shopping!");
+            }
         }),
         userInfo: builder.query<User, void>({
             providesTags: ["UserInfo"],

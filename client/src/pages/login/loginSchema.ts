@@ -6,9 +6,7 @@ export const loginSchema = z.object({
     }).nonempty({
         message: "Email is required"
     }),
-    password: z.string().min(6, {
-        message: "Password must be at least 6 characters long"
-    }).nonempty({
+    password: z.string().nonempty({
         message: "Password is required"
     })
 })
