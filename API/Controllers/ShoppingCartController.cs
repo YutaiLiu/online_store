@@ -17,8 +17,6 @@ namespace API.Controllers
         {
             var cart = await GetCart();
 
-            if (cart == null) cart = await CreateCart();
-
             return cart.ToDto();
         }
 
@@ -30,8 +28,6 @@ namespace API.Controllers
             if (product == null) return BadRequest("Product not found");
 
             var cart = await GetCart();
-
-            if (cart == null) cart = await CreateCart();
 
             try
             {
@@ -65,8 +61,6 @@ namespace API.Controllers
 
             var cart = await GetCart();
 
-            if (cart == null) return BadRequest("Cart not found");
-
             try
             {
                 cart.RemoveItem(product, quantity);
@@ -83,27 +77,9 @@ namespace API.Controllers
             return cart.ToDto();
         }
 
-        private async Task<ShoppingCart?> GetCart()
+        private async Task<ShoppingCart> GetCart()
         {
-            // .Include and .ThenInclude methods achieve the eager loading
-            // which is loading the related entities explicitly in a single query
-            // eager loading is the opposite of lazy loading and is good for performance
-            // e.g. we load the shopping cart item and related product in a single query
-            return await context.ShoppingCarts
-                .Include(x => x.Items)
-                .ThenInclude(x => x.Product)
-                .FirstOrDefaultAsync(x => x.CartId == Request.Cookies["cartId"]);
-        }
-
-        private async Task<ShoppingCart> CreateCart()
-        {
-            var cart = new ShoppingCart
-            {
-                CartId = Guid.NewGuid().ToString()
-            };
-
-            context.ShoppingCarts.Add(cart);
-            await context.SaveChangesAsync();
+            var cart = await context.ShoppingCarts.GetOrCreateShoppingCart(context, Request.Cookies["cartId"]);
 
             var cookieOptions = new CookieOptions
             {
@@ -116,6 +92,5 @@ namespace API.Controllers
 
             return cart;
         }
-
     }
 }

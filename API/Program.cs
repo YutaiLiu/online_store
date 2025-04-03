@@ -1,6 +1,7 @@
 using API.Data;
 using API.Entities;
 using API.Middleware;
+using API.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,8 +30,12 @@ builder.Services.AddIdentityApiEndpoints<User>(options =>
 // AddSingleton: create a single instance for the lifetime of the application, then dispose of it
 builder.Services.AddTransient<ExceptionMiddleware>();
 
+// Add Stripe service
+builder.Services.AddScoped<PaymentsService>();
+
 var app = builder.Build();
 
+// ====================================
 // Configure the HTTP request pipeline.
 // order is important here
 // we should add exception middleware on the top of the pipeline

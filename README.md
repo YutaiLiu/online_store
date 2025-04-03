@@ -102,3 +102,6 @@ And Cookie is Http only, means it can only be modified on server-side, like logi
 Note: POST api/login endpoint will take "username" as "email" in the body of request when it valid a user
 
 # Introduce React Hook Form and Zod to help us handle user input and frontend data validation
+
+# Add payment provider Stripe to our application
+In order to meet PCI Compliance, aka Payment Card Industry Data Security Standard

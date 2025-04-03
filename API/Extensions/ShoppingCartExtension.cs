@@ -1,6 +1,8 @@
-using System;
+using API.Controllers;
+using API.Data;
 using API.DTOs;
 using API.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions;
 
@@ -18,6 +20,8 @@ public static class ShoppingCartExtension
         {
             Id = cart.Id,
             CartId = cart.CartId,
+            PaymentIntentId = cart.PaymentIntentId,
+            ClientSecret = cart.ClientSecret,
             Items = cart.Items.Select(x => new ShoppingCartItemDto
             {
                 ProductId = x.ProductId,
@@ -31,4 +35,26 @@ public static class ShoppingCartExtension
             }).ToList()
         };
     }
+
+    public static async Task<ShoppingCart> GetOrCreateShoppingCart(this IQueryable<ShoppingCart> query, StoreContext context, string? cartId)
+    {
+        return await query
+                .Include(x => x.Items)
+                .ThenInclude(x => x.Product)
+                .FirstOrDefaultAsync(x => x.CartId == cartId)
+            ?? await CreateCart(context);
+    }
+
+    private static async Task<ShoppingCart> CreateCart(StoreContext context)
+        {
+            var cart = new ShoppingCart
+            {
+                CartId = Guid.NewGuid().ToString()
+            };
+
+            context.ShoppingCarts.Add(cart);
+            await context.SaveChangesAsync();
+
+            return cart;
+        }
 }

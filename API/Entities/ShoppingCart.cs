@@ -12,6 +12,12 @@ public class ShoppingCart
 
     public List<ShoppingCartItem> Items { get; set; } = new List<ShoppingCartItem>();
 
+    // Stripe issued identifier for the payment intent
+    // got updated every time the cart is updated
+    public string? PaymentIntentId { get; set; }
+    // Stripe issued client secret, used to confirm the payment
+    public string? ClientSecret { get; set; }
+
     public void AddItem(Product product, int quantity)
     {
         if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero");

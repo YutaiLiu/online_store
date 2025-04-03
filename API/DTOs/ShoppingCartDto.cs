@@ -8,5 +8,9 @@ public class ShoppingCartDto
 
     public required string CartId { get; set; }
 
+    public string? PaymentIntentId { get; set; }
+    
+    public string? ClientSecret { get; set; }
+
     public List<ShoppingCartItemDto> Items { get; set; } = [];
 }
