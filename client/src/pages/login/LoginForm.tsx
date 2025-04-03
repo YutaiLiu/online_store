@@ -1,22 +1,33 @@
 import { LockOutlined } from "@mui/icons-material";
 import { Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { loginSchema, LoginSchema } from "./loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLoginMutation } from "../../api/accountApi";
+import { useLazyUserInfoQuery, useLoginMutation } from "../../api/accountApi";
 
 export default function LoginForm() {
     const [sendLoginRequest, { isLoading }] = useLoginMutation();
+    const [fetchUserInfo] = useLazyUserInfoQuery();
     const location = useLocation();
     const { register, handleSubmit, setError, formState: { errors, isValid } } = useForm<LoginSchema>({
         mode: 'onTouched',
         resolver: zodResolver(loginSchema),
     });
 
+    const navigate = useNavigate();
+
     const onSubmit = async (data: LoginSchema) => {
         try {
             await sendLoginRequest(data).unwrap();
+            // redundant request to get user info
+            // in order to fix the timing issue
+            // before the user is redirected to the page
+            // be sure the user info is fetched
+            // this is a workaround for the issue
+            await fetchUserInfo().unwrap();
+            // navigate to the page user came from
+            navigate(location.state?.from || "/catalog");
         }
         catch {
             // error.data.detail === "Failed"

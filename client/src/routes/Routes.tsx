@@ -11,19 +11,22 @@ import ShoppingCartPage from "../pages/shoppingCart/ShoppingCartPage";
 import { CheckoutPage } from "../pages/checkout/CheckoutPage";
 import LoginForm from "../pages/login/LoginForm";
 import RegisterForm from "../pages/register/RegisterForm";
+import RequireAuth from "./RequireAuth";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
         children: [
+            {element: <RequireAuth />, children: [
+                {path: "/checkout", element: <CheckoutPage />},
+            ]},
             {path: "/", element: <HomePage />},
             {path: "/about", element: <AboutPage />},
             {path: "/contact", element: <ContactPage />},
             {path: "/catalog", element: <Catalog />},
             {path: "/catalog/:productId", element: <ProductDetails />},
             {path: "/shopping-cart", element: <ShoppingCartPage />},
-            {path: "/checkout", element: <CheckoutPage />},
             {path: "/login", element: <LoginForm />},
             {path: "/register", element: <RegisterForm />},
             {path: "/server-error", element: <ServerError />},

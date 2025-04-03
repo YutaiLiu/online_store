@@ -27,6 +27,8 @@ export default function UserMenu(prop: Props) {
       <Button
         onClick={handleClick}
         color="inherit"
+        size='large'
+        sx={{ fontSize: 'h6.fontSize', fontWeight: 'bold', textTransform: 'none' }}
       >
         {prop.user.email}
       </Button>
