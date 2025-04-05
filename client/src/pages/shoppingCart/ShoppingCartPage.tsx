@@ -10,8 +10,6 @@ export default function ShoppingCartPage() {
 
     if (!shoppingCart || shoppingCart.items.length == 0) return <div>Shopping Cart is empty</div>;
 
-    const subtotal = shoppingCart.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
     return (
         <Grid2 container spacing={2}>
             <Grid2 size={8}>
@@ -20,7 +18,7 @@ export default function ShoppingCartPage() {
                 ))}
             </Grid2>
             <Grid2 size={4}>
-                <OrderSummary subtotal={subtotal}/>
+                <OrderSummary />
             </Grid2>
         </Grid2>
     )

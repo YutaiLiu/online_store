@@ -8,7 +8,7 @@ import ProductDetails from "../pages/catalog/ProductDetails";
 import ServerError from "../components/errors/ServerError";
 import NotFound from "../components/errors/NotFound";
 import ShoppingCartPage from "../pages/shoppingCart/ShoppingCartPage";
-import { CheckoutPage } from "../pages/checkout/CheckoutPage";
+import CheckoutPage from "../pages/checkout/CheckoutPage";
 import LoginForm from "../pages/login/LoginForm";
 import RegisterForm from "../pages/register/RegisterForm";
 import RequireAuth from "./RequireAuth";

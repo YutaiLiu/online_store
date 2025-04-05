@@ -1,14 +1,13 @@
 import { Box, Typography, Divider, Button, Paper } from "@mui/material";
 import { currencyFormat } from "../util";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
+import { useFetchShoppingCartQuery } from "../api/shoppingCartApi";
 
-type OrderSummaryProps = {
-    subtotal: number;
-}
-
-export default function OrderSummary(props: OrderSummaryProps) {
-    const subtotal = props.subtotal || 0;
+export default function OrderSummary() {
+    const {data: shoppingCart} = useFetchShoppingCartQuery();
+    const subtotal = !shoppingCart ? 0 : shoppingCart.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const deliveryFee = subtotal / 100 >= 100 ? 0 : 1000;
+    const location = useLocation();
 
     return (
         <Box display="flex" flexDirection="column" alignItems="center" maxWidth="lg" mx="auto">
@@ -17,7 +16,7 @@ export default function OrderSummary(props: OrderSummaryProps) {
                 <Typography variant="h6" component="p" fontWeight="bold">
                     Order summary
                 </Typography>
-                <Typography variant="body2" sx={{fontStyle: 'italic'}}>
+                <Typography variant="body2" sx={{ fontStyle: 'italic' }}>
                     Orders over $100 qualify for free delivery!
                 </Typography>
                 <Box mt={2}>
@@ -25,13 +24,6 @@ export default function OrderSummary(props: OrderSummaryProps) {
                         <Typography color="textSecondary">Subtotal</Typography>
                         <Typography>
                             {currencyFormat(subtotal)}
-                        </Typography>
-                    </Box>
-                    <Box display="flex" justifyContent="space-between" mb={1}>
-                        <Typography color="textSecondary">Discount</Typography>
-                        <Typography color="success">
-                            {/* TODO */}
-                            -$0.00
                         </Typography>
                     </Box>
                     <Box display="flex" justifyContent="space-between" mb={1}>
@@ -50,16 +42,18 @@ export default function OrderSummary(props: OrderSummaryProps) {
                 </Box>
 
                 <Box mt={2}>
-                    <Button
-                        component={NavLink}
-                        to="/checkout"
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                        sx={{ mb: 1 }}
-                    >
-                        Checkout
-                    </Button>
+                    {!location.pathname.includes('checkout') &&
+                        <Button
+                            component={NavLink}
+                            to="/checkout"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            sx={{ mb: 1 }}
+                        >
+                            Checkout
+                        </Button>
+                    }
                     <Button
                         component={NavLink}
                         to="/catalog"
