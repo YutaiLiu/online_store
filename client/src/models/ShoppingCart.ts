@@ -2,6 +2,8 @@ export type ShoppingCart = {
     id: number
     cartId: string
     items: Item[]
+    clientSecret?: string
+    paymentIntentId?: string
 }
 
 export type Item = {

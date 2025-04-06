@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { router } from "../routes/Routes";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://localhost:5001/api',
+    baseUrl: import.meta.env.VITE_API_URL,
     // Including credentials in the request allows the API to set cookies in the browser
     credentials: 'include',
 });

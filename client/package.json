@@ -17,6 +17,8 @@
     "@mui/icons-material": "^6.4.6",
     "@mui/material": "^6.4.6",
     "@reduxjs/toolkit": "^2.6.0",
+    "@stripe/react-stripe-js": "^3.6.0",
+    "@stripe/stripe-js": "^7.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.55.0",

@@ -105,3 +105,6 @@ Note: POST api/login endpoint will take "username" as "email" in the body of req
 
 # Add payment provider Stripe to our application
 In order to meet PCI Compliance, aka Payment Card Industry Data Security Standard
+
+# Add configuration to out client web app
+.env will store config data, like Stripe publishable key, .env will be downloaded to user browser, so no secrects we can store in it. It's excluded from git but it doesn't means we can leave any secret in it.

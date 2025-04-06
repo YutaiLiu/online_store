@@ -37,6 +37,8 @@ public class PaymentsService(IConfiguration config)
             };
 
             await service.UpdateAsync(shoppingCart.PaymentIntentId, options);
+            intent.Id = shoppingCart.PaymentIntentId;
+            intent.ClientSecret = shoppingCart.ClientSecret;
         }
         return intent;
     }
