@@ -2,7 +2,7 @@ import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@
 import { Product } from "../../models/Product";
 import { Link } from "react-router";
 import { useAddItemToCartMutation } from "../../api/shoppingCartApi";
-import { currencyFormat } from "../../util";
+import { currencyFormat } from "../../lib/util";
 
 export default function ProductCard(props: Product) {
     const [addItemToCart, {isLoading}] = useAddItemToCartMutation();

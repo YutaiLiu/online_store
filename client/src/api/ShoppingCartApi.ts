@@ -3,6 +3,7 @@ import { baseQueryWithErrorHandling } from "./baseApi";
 import { ShoppingCart } from "../models/ShoppingCart";
 import { setCartItemsCount } from "../store/uiSlice";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 export const shoppingCartApi = createApi({
     reducerPath: 'shoppingCartApi',
@@ -51,7 +52,19 @@ export const shoppingCartApi = createApi({
             }),
             invalidatesTags: ['ShoppingCart'],
         }),
+        clearShoppingCart: builder.mutation<void, void>({
+            queryFn: () => ({data: undefined}),
+            onQueryStarted: async (_, { dispatch }) => {
+                dispatch(
+                    shoppingCartApi.util.updateQueryData('fetchShoppingCart', undefined, (draft) => {
+                        draft.items = []
+                    })
+                );
+                dispatch(setCartItemsCount(0));
+                Cookies.remove('cartId');
+            }
+        })
     })
 });
 
-export const { useFetchShoppingCartQuery, useAddItemToCartMutation, useRemoveItemFromCartMutation } = shoppingCartApi;
+export const { useFetchShoppingCartQuery, useAddItemToCartMutation, useRemoveItemFromCartMutation, useClearShoppingCartMutation } = shoppingCartApi;

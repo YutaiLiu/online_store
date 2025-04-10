@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { Grid2, IconButton, Paper, Typography } from "@mui/material";
 import { Add, Close, Remove } from "@mui/icons-material";
 import { useAddItemToCartMutation, useRemoveItemFromCartMutation } from "../../api/shoppingCartApi";
-import { currencyFormat } from "../../util";
+import { currencyFormat } from "../../lib/util";
 
 type Props = {
     item: Item

@@ -3,16 +3,18 @@ import OrderSummary from "../../components/OrderSummary"
 import CheckoutStepper from "./CheckoutStepper"
 import { loadStripe, StripeElementsOptions } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
-import { useFetchShoppingCartQuery } from "../../api/shoppingCartApi";
 import { useEffect, useMemo, useRef } from "react";
 import { useCreatePaymentIntentMutation } from "../../api/checkoutApi"
+import { useAppSelector } from "../../store/store"
+import { useShoppingCart } from "../../lib/hooks/useShoppingCart"
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 export default function CheckoutPage() {
-    const { data: shoppingCart } = useFetchShoppingCartQuery();
+    const {shoppingCart} = useShoppingCart();
     const [createPaymentIntent, {isLoading}] = useCreatePaymentIntentMutation();
     const created = useRef(false);
+    const isDarkMode = useAppSelector(state => state.ui.isDarkMode)
     
     useEffect(() => {
         if (!created.current) createPaymentIntent();
@@ -22,9 +24,13 @@ export default function CheckoutPage() {
     const options: StripeElementsOptions | undefined = useMemo(() => {
         if (!shoppingCart?.clientSecret) return undefined
         return {
-            clientSecret: shoppingCart.clientSecret
+            clientSecret: shoppingCart.clientSecret,
+            appearance: {
+                labels: 'floating',
+                theme: isDarkMode ? 'night' : 'stripe'
+            }
         }
-    }, [shoppingCart?.clientSecret]);
+    }, [shoppingCart?.clientSecret, isDarkMode]);
 
     return (
         <Grid2 container spacing={2}>

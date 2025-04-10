@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithErrorHandling } from "./baseApi";
-import { User } from "../models/User";
+import { Address, User } from "../models/User";
 import { LoginSchema } from "../pages/login/loginSchema";
 import { router } from "../routes/Routes";
 import { toast } from "react-toastify";
@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 export const accountApi = createApi({
     reducerPath: "accountApi",
     baseQuery: baseQueryWithErrorHandling,
-    tagTypes: ["UserInfo"],
+    tagTypes: ["UserInfo", "UserAddress"],
     endpoints: (builder) => ({
         // use mutation method for POST requests
         login: builder.mutation<void, LoginSchema>({
@@ -50,13 +50,27 @@ export const accountApi = createApi({
                     method: "POST",
                 }
             },
-            invalidatesTags: ["UserInfo"],
-            async onQueryStarted(_, { queryFulfilled }) {
+            onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
                 await queryFulfilled;
+                dispatch(accountApi.util.resetApiState())
                 router.navigate("/login");
             }
+        }),
+        fetchAddress: builder.query<Address, void>({
+            providesTags: ["UserAddress"],
+            query: () => ({
+                url: "account/address"
+            })
+        }),
+        updateAddress: builder.mutation<Address, Address>({
+            query: (address) => ({
+                url: "account/address",
+                method: "POST",
+                body: address
+            }),
+            invalidatesTags: ["UserAddress"],
         })
     })
 });
 
-export const { useLoginMutation, useRegisterMutation, useUserInfoQuery, useLogoutMutation, useLazyUserInfoQuery } = accountApi;
+export const { useLoginMutation, useRegisterMutation, useUserInfoQuery, useLogoutMutation, useLazyUserInfoQuery, useFetchAddressQuery, useUpdateAddressMutation } = accountApi;

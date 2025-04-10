@@ -3,7 +3,7 @@
 import { useParams } from "react-router";
 import { Button, Divider, Grid2, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
 import { useFetchProductByIdQuery } from "../../api/catalogApi";
-import { currencyFormat } from "../../util";
+import { currencyFormat } from "../../lib/util";
 import { useAddItemToCartMutation } from "../../api/shoppingCartApi";
 import { useState } from "react";
 import { toast } from "react-toastify";

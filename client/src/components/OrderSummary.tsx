@@ -1,12 +1,10 @@
 import { Box, Typography, Divider, Button, Paper } from "@mui/material";
-import { currencyFormat } from "../util";
+import { currencyFormat } from "../lib/util";
 import { NavLink, useLocation } from "react-router";
-import { useFetchShoppingCartQuery } from "../api/shoppingCartApi";
+import { useShoppingCart } from "../lib/hooks/useShoppingCart";
 
 export default function OrderSummary() {
-    const {data: shoppingCart} = useFetchShoppingCartQuery();
-    const subtotal = !shoppingCart ? 0 : shoppingCart.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    const deliveryFee = subtotal / 100 >= 100 ? 0 : 1000;
+    const {subtotal, deliveryFee} = useShoppingCart();
     const location = useLocation();
 
     return (
