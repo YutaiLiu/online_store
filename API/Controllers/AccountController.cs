@@ -1,7 +1,6 @@
-using System;
-using API.Data.Migrations;
 using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -86,7 +85,7 @@ public class AccountController(SignInManager<User> signInManager) : ControllerBa
         // query user data with eager loading
         var user = await signInManager.UserManager.Users
             .Include(u => u.Address)
-            .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+            .FirstOrDefaultAsync(u => u.UserName == User.GetUsername());
 
         if (user == null) return Unauthorized();
 
@@ -105,7 +104,7 @@ public class AccountController(SignInManager<User> signInManager) : ControllerBa
     {
         var user = await signInManager.UserManager.Users
             .Include(u => u.Address)
-            .FirstOrDefaultAsync(u => u.UserName == User.Identity.Name);
+            .FirstOrDefaultAsync(u => u.UserName == User.GetUsername());
 
         if (user == null) return Unauthorized();
 

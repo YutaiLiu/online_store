@@ -108,3 +108,6 @@ In order to meet PCI Compliance, aka Payment Card Industry Data Security Standar
 
 # Add configuration to out client web app
 .env will store config data, like Stripe publishable key, .env will be downloaded to user browser, so no secrects we can store in it. It's excluded from git but it doesn't means we can leave any secret in it.
+
+# Add order feature to our web app
+Create order aggregate entity to store the order
