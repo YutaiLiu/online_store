@@ -24,7 +24,7 @@ export default function ProductDetails() {
     // if (!product) return <div>Loading...</div>;
 
     const [addItemToCart, {isLoading}] = useAddItemToCartMutation();
-    const { data: product } = useFetchProductByIdQuery(productId ? { id: parseInt(productId) } : { id: 0});
+    const { data: product } = useFetchProductByIdQuery(productId ? parseInt(productId): 0);
     const [quantity, setQuantity] = useState(1);
         
     if (!product) return <div>Loading...</div>;

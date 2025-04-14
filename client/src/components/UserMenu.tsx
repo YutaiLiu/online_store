@@ -6,6 +6,7 @@ import { User } from '../models/User';
 import { Divider, ListItemIcon, ListItemText } from '@mui/material';
 import { History, Logout, Person } from '@mui/icons-material';
 import { useLogoutMutation } from '../api/accountApi';
+import { Link } from 'react-router';
 
 type Props = {
   user: User;
@@ -43,11 +44,11 @@ export default function UserMenu(prop: Props) {
           </ListItemIcon>
           <ListItemText>My profile</ListItemText>
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem component={Link} to='/orders' onClick={() => handleClose}>
           <ListItemIcon>
             <History />
           </ListItemIcon>
-          <ListItemText>My orders</ListItemText>
+          <ListItemText>Order History</ListItemText>
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => {

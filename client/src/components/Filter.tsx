@@ -23,7 +23,6 @@ export default function Filter() {
             <Paper sx={{ p: 3 }}>
                 <RadioButtonGroup selectedValue={orderBy} onChange={e => dispatch(setOrderBy(e.target.value))} />
             </Paper>
-            <Button onClick={() => dispatch(resetFilters())}>Reset filters</Button>
             <Paper sx={{ p: 3 }}>
                 <CheckboxButtonGroup
                     title='Brands'
@@ -38,6 +37,7 @@ export default function Filter() {
                     checked={types}
                     onChange={(items: string[]) => dispatch(setTypes(items))} />
             </Paper>
+            <Button onClick={() => dispatch(resetFilters())}>Reset filters</Button>
         </Box>
     );
 }

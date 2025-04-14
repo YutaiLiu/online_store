@@ -7,12 +7,14 @@ import { ConfirmationToken, StripeAddressElementChangeEvent, StripePaymentElemen
 import { toast } from "react-toastify";
 import { useShoppingCart } from "../../lib/hooks/useShoppingCart";
 import { useNavigate } from "react-router";
+import { useCreateOrderMutation } from "../../api/orderApi";
 
 const steps = ['Address', 'Payment', 'Review'];
 
 export default function CheckoutStepper() {
     const { data, isLoading } = useFetchAddressQuery();
     const [updateAddress] = useUpdateAddressMutation();
+    const [createOrder] = useCreateOrderMutation();
     const stripe = useStripe();
     const elements = useElements();
     const navigate = useNavigate();
@@ -77,6 +79,10 @@ export default function CheckoutStepper() {
         setSubmitting(true);
         try {
             if (!confirmationToken || !shoppingCart?.clientSecret) throw new Error('Unable to process your payment');
+            
+            const orderModel = await createOrderModel();
+            const orderResult = await createOrder(orderModel);
+
             const paymentResult = await stripe?.confirmPayment({
                 clientSecret: shoppingCart.clientSecret,
                 redirect: 'if_required',
@@ -86,7 +92,7 @@ export default function CheckoutStepper() {
             });
 
             if (paymentResult?.paymentIntent?.status === 'succeeded') {
-                navigate('/checkout/success');
+                navigate('/checkout/success', {state: orderResult});
                 clearShoppingCart();
             } else if (paymentResult?.error) {
                 throw new Error('Found error in Stripe payment processing');
@@ -99,7 +105,13 @@ export default function CheckoutStepper() {
         } finally {
             setSubmitting(false);
         }
+    }
 
+    const createOrderModel = async () => {
+        const shippingAddress = await getStripeAddress();
+        const paymentSummary = confirmationToken?.payment_method_preview.card;
+        if (!shippingAddress || !paymentSummary) throw new Error('Failed to create order');
+        return {shippingAddress, paymentSummary};
     }
 
     return (

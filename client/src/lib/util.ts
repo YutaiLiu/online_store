@@ -1,3 +1,4 @@
+import { Order } from "../models/Order";
 // if amount is null or undefined, "amount ?? 0" will set it as 0
 // ?? is called the nullish coalescing operator
 // btw
@@ -8,4 +9,14 @@
 // ?? is similar to ||, but it only treats null and undefined as falsy
 export function currencyFormat(amount: number): string {
     return `$${((amount ?? 0) / 100).toFixed(2)}`;
+}
+
+export function getAddressFromOrder(order: Order) {
+    const address = order.shippingAddress;
+    return `${address.name}, ${address?.line1}, ${address?.line2 ? address.line2 + ', ' : ''}${address?.city}, ${address?.state}, ${address?.postal_code}, ${address?.country}`;
+}
+
+export function getPaymentSummaryFromOrder(order: Order) {
+    const card = order.paymentSummary;
+    return `${card.brand.toUpperCase()}, **** **** **** ${card.last4}, Exp: ${card.exp_month}/${card.exp_year}`;
 }

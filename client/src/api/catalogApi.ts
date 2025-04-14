@@ -21,8 +21,8 @@ export const catalogApi = createApi({
                 };
             },
         }),
-        fetchProductById: builder.query<Product, { id: number }>({
-            query: ({ id }) => `/products/${id}`,
+        fetchProductById: builder.query<Product, number>({
+            query: (id) => `/products/${id}`,
         }),
         fetchFilter: builder.query<Filter, void>({
             query: () => 'products/filter',
