@@ -111,3 +111,19 @@ In order to meet PCI Compliance, aka Payment Card Industry Data Security Standar
 
 # Add order feature to our web app
 Create order aggregate entity to store the order
+
+# Test account
+username: yutai_liu@test.com
+password: 12qw0-ER
+
+# How to run this project
+Launch API server: 
+    navigate to online_store
+    run: 
+        dotnet build
+        dotnet run --project API
+Launch React UI:
+    navigate to client directory
+    run: npm run dev
+
+# Publishing and add CICD (Continuous Integration and Continuous Deployment) for our app
