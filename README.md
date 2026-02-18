@@ -111,3 +111,15 @@ In order to meet PCI Compliance, aka Payment Card Industry Data Security Standar
 
 # Add order feature to our web app
 Create order aggregate entity to store the order
+
+# Introduce AI Agent to this project
+Using Cursor to help us to develop current e-commerce online store, using Claude Sonnet by default
+    Cursor tricks: (except auto completion)
+        1. Chat with codebase, use ```@codebase``` in the chat
+            e.g.  @codebase explain this project architecture
+        2. Edit selected code
+            Select the block of code, then
+            ```Cmd + K```
+            input: Make this async and add pagination
+        3. Agent mode
+           e.g. Input: Add JWT authentication to this project

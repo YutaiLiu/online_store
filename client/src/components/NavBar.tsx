@@ -9,8 +9,8 @@ import { useUserInfoQuery } from "../api/accountApi";
 const midLinks = [
     { title: 'Home', path: '/' },
     { title: 'Catalog', path: '/catalog' },
-    { title: 'About', path: '/about' },
-    { title: 'Contact', path: '/contact' },
+    //{ title: 'About', path: '/about' },
+    //{ title: 'Contact', path: '/contact' },
 ]
 
 const rightLinks = [
